@@ -4,6 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 var todoApp = angular.module('starter', ['ionic', 'ngCordova']);
+var db = null;
 
 todoApp.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -42,8 +43,6 @@ todoApp.config(function($stateProvider, $urlRouterProvider) {
       });
   $urlRouterProvider.otherwise('/config');
 });
-
-var db = null;
 
 todoApp.controller("ConfigController", function($scope, $ionicPlatform, $ionicLoading, $location, $ionicHistory, $cordovaSQLite) {
     $ionicHistory.nextViewOptions({
