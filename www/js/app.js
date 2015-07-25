@@ -134,6 +134,18 @@ todoApp.controller("ListsController", function($scope, $ionicPlatform, $ionicPop
             });
     }
 
+    $scope.delete = function(item) {
+        var outerquery = "DELETE FROM tblTodoListItems where todo_list_id = ?";
+        var innerquery = "DELETE FROM tblTodoLists where id = ?";
+        $cordovaSQLite.execute(db, outerquery, [item.id]).then(function(res) {
+            $cordovaSQLite.execute(db, innerquery, [item.id]).then(function(res) {
+                $scope.lists.splice($scope.lists.indexOf(item), 1);
+            });
+        }, function (err) {
+            console.error(err);
+        });
+    }
+
 });
 
 todoApp.controller("ItemsController", function($scope, $ionicPlatform, $ionicPopup, $cordovaSQLite, $stateParams) {
@@ -170,6 +182,15 @@ todoApp.controller("ItemsController", function($scope, $ionicPlatform, $ionicPop
                     console.log("Action not completed");
                 }
             });
+    }
+
+    $scope.delete = function(item) {
+        var query = "DELETE FROM tblTodoListItems where id = ?";
+        $cordovaSQLite.execute(db, query, [item.id]).then(function(res) {
+            $scope.items.splice($scope.items.indexOf(item), 1);
+        }, function (err) {
+            console.error(err);
+        });
     }
 
 });
